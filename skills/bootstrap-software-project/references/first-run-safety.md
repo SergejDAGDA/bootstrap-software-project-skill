@@ -28,10 +28,12 @@ Downloading tools or installing skills from GitHub may be done by supported inst
 
 ## Minimal acceptance for Prepare
 
+**Release gate:** absence of canonical project memory is a **BLOCKER**, not an optional follow-up. Before the first task-owned local commit, verify the skill owner's actual memory audit succeeds and `AGENTS.md` has all protocol/schema/root/update-policy/commit-policy markers. If this gate fails, preserve partial files without committing them as a completed Bootstrap, and explain the precise corrective action. If the user explicitly opted out of project memory, report an incomplete/nonstandard setup rather than mislabeling it PREPARED.
+
 - The concept, MVP and exclusions are grounded in supplied evidence.
 - Key decisions and unknowns are recorded with correct approval provenance.
 - `AGENTS.md` routes future work to project memory and knowledge owners.
-- Canonical project-memory files exist and pass their structural audit.
+- All five canonical `docs/project-memory/{PROJECT,STATUS,DECISIONS,SESSION_LOG,HANDOFF}.md` files exist, and the installed `maintain-project-memory` audit passes with its actual output recorded.
 - The product documentation has an accurate index, no broken relative links, and Git-clean authored Markdown.
 - The intended project root is recognized correctly; local Git exists and first commit is verified when approved.
 - The next developer can resume from disk without needing inaccessible previous chat context.

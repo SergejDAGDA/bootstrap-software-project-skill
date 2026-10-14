@@ -18,8 +18,8 @@ class BootstrapSkillContractTests(unittest.TestCase):
     def test_skill_frontmatter_and_name(self):
         text = self.read(SKILL / "SKILL.md")
         self.assertTrue(text.startswith("---\nname: bootstrap-software-project\n"))
-        self.assertRegex(text, r"(?m)^description: .*substantial NEW software project")
-        self.assertIn("Not for brainstorming alone", text)
+        self.assertRegex(text, r"(?m)^description: .*NEW software project")
+        self.assertIn("Not for idea-only brainstorming", text)
         self.assertEqual(text.count("\n---\n"), 1)
         description = text.split("\ndescription: ", 1)[1].split("\n---", 1)[0]
         self.assertLessEqual(len(description), 500)
@@ -36,7 +36,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
                 "references/first-run-safety.md",
             },
         )
-        self.assertEqual(self.read(SKILL / "VERSION").strip(), "0.1.0")
+        self.assertEqual(self.read(SKILL / "VERSION").strip(), "0.1.1")
 
     def test_trigger_modes_do_not_turn_brainstorming_into_mutations(self):
         text = self.read(SKILL / "SKILL.md")
@@ -77,7 +77,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
 
     def test_verification_and_completion_are_not_faked(self):
         text = self.read(SKILL / "SKILL.md")
-        for phrase in ("PREPARED", "BUILD READY", "INCOMPLETE / ENVIRONMENT", "Do not claim it runs", "No push", "actual tests"):
+        for phrase in ("PREPARED", "BUILD READY", "INCOMPLETE / ENVIRONMENT", "Do not claim it runs", "No push", "tests were actually checked"):
             self.assertIn(phrase, text)
 
     def test_references_are_present(self):
@@ -90,6 +90,41 @@ class BootstrapSkillContractTests(unittest.TestCase):
         text = "\n".join(self.read(p) for p in SKILL.rglob("*.md"))
         for forbidden in ("timeline-tool", "4ort.bayern", "sergei@", "D:\\Projects\\", "github.com/SergejDAGDA/"):
             self.assertNotIn(forbidden, text)
+
+    def test_prepare_memory_gate_is_mandatory_before_commit(self):
+        skill = self.read(SKILL / "SKILL.md")
+        safety = self.read(SKILL / "references/first-run-safety.md")
+        for name in ("PROJECT.md", "STATUS.md", "DECISIONS.md", "SESSION_LOG.md", "HANDOFF.md"):
+            self.assertIn(name, skill)
+        for marker in (
+            "Project memory protocol: maintain-project-memory/v2",
+            "Project memory schema: project-memory/v1",
+            "Canonical project-memory root: docs/project-memory",
+            "Memory update policy",
+            "Local Git commit policy",
+            "audit_project_memory.py <project-root>",
+        ):
+            self.assertIn(marker, skill)
+        self.assertIn("before staging", skill)
+        self.assertIn("BLOCKER / INCOMPLETE", skill)
+        self.assertIn("a **BLOCKER**", safety)
+
+    def test_plain_prompt_and_routing_regression_are_documented(self):
+        readme_ru = self.read(ROOT / "README.ru.md")
+        readme_en = self.read(ROOT / "README.md")
+        routing = self.read(DOCS / "OPTIONAL_GLOBAL_ROUTING.md")
+        acceptance = self.read(DOCS / "ACCEPTANCE.md")
+        self.assertIn("<ПУТЬ_К_ПАПКЕ_ПРОЕКТА>", readme_ru)
+        self.assertIn("<PROJECT_FOLDER_PATH>", readme_en)
+        self.assertNotIn("timeline-tool", readme_ru.lower())
+        self.assertIn("without naming any skill", acceptance)
+        self.assertIn("BEFORE separately choosing", routing)
+        self.assertIn("user-reviewed", routing)
+
+    def test_report_must_distinguish_actually_applied_from_discovered_skills(self):
+        skill = self.read(SKILL / "SKILL.md")
+        self.assertIn("discovered/read from applied", skill)
+        self.assertIn("NOT VERIFIED", skill)
 
     def test_markdown_hygiene(self):
         paths = list(ROOT.rglob("*.md"))

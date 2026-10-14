@@ -4,7 +4,7 @@
 
 A portable Codex Agent Skill for starting **any kind of new software project** from a concept: a website, web app, desktop Windows/macOS/Linux application, calculator, CLI, library, service, extension, or a hybrid. The skill classifies the intended product and selects appropriate foundations instead of assuming one technology stack.
 
-**Status:** version `0.1.0` development candidate, **not published or installed**. This package defines the workflow and static contract checks; it has not yet passed an independent real Codex Desktop new-folder acceptance.
+**Version:** `0.1.1` patch candidate, pending independent source acceptance and local reinstall. `v0.1.0` passed isolated manual tests but a real fresh-folder Prepare request revealed that an agent can select documentation and Git workflows **without loading the bootstrap orchestrator**, leaving project memory absent while declaring the work complete. This update adds a mandatory memory completion gate and stronger routing guidance; true automatic activation still needs a fresh Desktop test.
 
 ## What it coordinates
 
@@ -15,7 +15,38 @@ A portable Codex Agent Skill for starting **any kind of new software project** f
 - The platform's ordinary generators/SDKs, `.gitignore`, and executable smoke checks for Build mode.
 - An approved **local** Git repository, safe initial commit, and no implied remote publication.
 
-The skill is an **orchestrator**, not a replacement for either companion skill. If a companion is unavailable, the workflow reports that its ownership layer is not fully verified rather than claiming complete readiness.
+The skill is an **orchestrator**, not a replacement for either companion skill. **Prepare and Build are incomplete without the five canonical project-memory documents, required `AGENTS.md` markers/policies, and a passing owner memory audit**; a product-documentation audit and clean commit cannot substitute for them. If a companion is unavailable, the workflow reports that its ownership layer is not fully verified rather than claiming complete readiness.
+
+## Start a new project (copy and adapt)
+
+Use a fresh Codex Desktop chat in the selected project folder. The prompt intentionally does **not** name Agent Skills, Git commands, a technology stack or another reference project. Place your `CONCEPT.md` there if available; otherwise put the idea directly in the request.
+
+```text
+Start a new standalone software project.
+Project folder: <PROJECT_FOLDER_PATH>
+
+Read any concept or MVP documents in this folder. If none are present,
+here is my concept: <SHORT_CONCEPT_DESCRIPTION>
+
+First, prepare the project for development: assess the concept, identify
+the project type, propose an architecture, MVP and testable development
+plan, and create the necessary durable project files and guidance.
+Do not implement the application yet. Ask about architectural decisions
+only where requirements do not determine a safe answer.
+
+I authorize standard local Git initialization and a safe first local
+commit in this selected new project folder. Do not create a remote,
+push, publish, release or deploy. Preserve all existing source documents.
+At the end, report what was created, what was verified, and what remains
+unresolved. Do not call the project ready if required preparation is missing.
+```
+
+For Build, replace "Do not implement the application yet" with a request
+for the smallest working app and real smoke tests. A general idea-only
+conversation does not imply permission to create files. Since implicit skill
+discovery is not guaranteed, the [optional global Codex routing rule](docs/OPTIONAL_GLOBAL_ROUTING.md)
+can be added **only after explicit review and approval**; never silently
+edit a user's global `AGENTS.md`.
 
 ## Modes
 
@@ -53,6 +84,6 @@ python -m unittest discover -s tests -v
 
 Contract tests cover skill/package structure, trigger guardrails, project-type adaptability, documented Git safety, and absence of conflict with existing memory and documentation ownership. They are **not** an end-to-end Codex invocation test.
 
-## Planned acceptance
+## Acceptance and regression
 
-Use a fresh **disposable** folder with an explicit Prepare request and a supplied Markdown concept; repeat with a Build request in a new folder and a prose-only concept. A third test should ask only to brainstorm (zero filesystem writes). Verify existing-project safety, authorized local Git, documented artifacts, meaningful tests, and no remote changes. Review blockers independently before publishing or installing.
+See [independent acceptance](docs/ACCEPTANCE.md), including a **plain-prompt fresh Desktop** scenario that must distinguish automatic activation from manual invocation. A first local commit without canonical project memory is a **failed Bootstrap**, not an accepted documentation-only variant. Contract tests do not establish agent behavior. Independent source acceptance precedes merge/install; automatic trigger validation follows installation in a fresh Desktop session.
