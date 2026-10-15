@@ -2,9 +2,10 @@
 
 ## 0.1.2 (candidate)
 
+- Make `SKILL.md` the sole normative routing/completion contract; reduce `agents/openai.yaml` to a policy-free entrypoint and retain operational safety checks in its reference.
+- Add metadata negative-mutation regressions that reject competing installed-owner fallback instructions outside `SKILL.md`.
 - Reconcile top-level Prepare/Existing-project routing with per-owner standalone/mixed/integrated outcomes and project-local AGENTS.md eligibility.
 - Require section-scoped negative mutation tests so previous contradictory routing cannot pass on unrelated text matches.
-
 - Preflight effective author and committer identity before project writes; do not depend on GitHub, guess names/emails or mutate global config without permission.
 - Complete portable standalone Prepare/Build without optional companion skills; preserve their mandatory canonical gates when installed.
 - Classify source briefs, real application code, binary/licensed assets and unrelated files before writing or selectively staging.
