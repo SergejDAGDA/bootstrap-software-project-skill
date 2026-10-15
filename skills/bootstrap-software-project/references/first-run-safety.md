@@ -9,8 +9,15 @@ Before writing:
 - Resolve and display the real target path. Reject guessed paths and paths that could traverse into unapproved directories.
 - Verify the folder exists or ask before creating it; inspect hidden files and symlinks/reparse points, not just visible entries.
 - Determine whether this root or an ancestor already belongs to a Git worktree via real Git commands. Do not `git init` inside another repository by default; never `git init` at its parent by accident.
-- Preserve user-supplied briefs. Do not treat blank folders as permission to create hosting accounts or repositories remotely.
-- Inventory existing files. Any surprising files or dirty/staged work trigger review, not wholesale regeneration.
+- Preserve user-supplied briefs and assets byte-for-byte; if edits are contemplated, record pre-write checksums. Do not treat blank folders as permission to create hosting accounts or repositories remotely.
+- Classify files before writes: concept/brief/design sources permit concept-only Bootstrap; existing code/config or maintained memory means **existing project**; binary, oversized, third-party or license-uncertain assets require an explicit selective-tracking decision; unknown, unrelated or sensitive files trigger review and must not enter staging by default. File presence does not equal permission to edit, delete, import or commit.
+- Inventory existing files, hidden files and Git staging. Any surprising files or dirty/staged work trigger review, not wholesale regeneration.
+
+## Git identity without an external hosting account
+
+Before bulk scaffolding, establish whether the **effective** author and committer identities are explicitly configured, using Git's repository/global/system/conditional config, any authorized environment overrides and `user.useConfigOnly=true` identity checks. Do not rely on automatic username@hostname guesses, or presume GitHub/GitLab credentials or remotes. Check both author and committer, and re-check immediately before commit.
+
+If absent, pause to ask what name/email to use and whether to set it **locally** for the selected repo or **globally**. Do not silently pick a developer name, an email, a service account or a made-up `noreply` address. A local setting can be applied only after approved `git init`; a global setting requires separate explicit consent, preserves existing settings, and affects future repositories. No identity values belong in a publicly distributed skill or test fixture except obvious generic dummy examples. Report ENVIRONMENT / INCOMPLETE while blocked without discarding draft files, Git index or history. Git author identity is commit metadata, **not** login authorization.
 
 ## Git authorization handshake
 
@@ -28,14 +35,16 @@ Downloading tools or installing skills from GitHub may be done by supported inst
 
 ## Minimal acceptance for Prepare
 
-**Release gate:** absence of canonical project memory is a **BLOCKER**, not an optional follow-up. Before the first task-owned local commit, verify the skill owner's actual memory audit succeeds and `AGENTS.md` has all protocol/schema/root/update-policy/commit-policy markers. If this gate fails, preserve partial files without committing them as a completed Bootstrap, and explain the precise corrective action. If the user explicitly opted out of project memory, report an incomplete/nonstandard setup rather than mislabeling it PREPARED.
+**Integrated release gate:** if `maintain-project-memory` is installed/required, absence of canonical project memory is a **BLOCKER**, not an optional follow-up. Before the first task-owned local commit, verify the owner's actual audit succeeds and `AGENTS.md` has the protocol/schema/root/update-policy/commit-policy markers. If an installed owner is broken, do not hide its failure behind standalone fallback. Preserve partial files without calling the result complete.
+
+**Standalone release gate:** if the owner is genuinely absent and not explicitly required, minimal truthful `AGENTS.md` and project notes can pass without any claim to that protocol or its audit. If `project-documentation` is absent, use small native Markdown with explicit link/scope checks; if installed, its actual audit remains mandatory.
 
 - The concept, MVP and exclusions are grounded in supplied evidence.
 - Key decisions and unknowns are recorded with correct approval provenance.
 - `AGENTS.md` routes future work to project memory and knowledge owners.
-- All five canonical `docs/project-memory/{PROJECT,STATUS,DECISIONS,SESSION_LOG,HANDOFF}.md` files exist, and the installed `maintain-project-memory` audit passes with its actual output recorded.
-- The product documentation has an accurate index, no broken relative links, and Git-clean authored Markdown.
-- The intended project root is recognized correctly; local Git exists and first commit is verified when approved.
+- When the memory owner is installed, all five canonical `docs/project-memory/{PROJECT,STATUS,DECISIONS,SESSION_LOG,HANDOFF}.md` files exist and its actual audit passes; otherwise standalone notes exist without false protocol claims.
+- The product documentation has an accurate index, no broken relative links and Git-clean authored Markdown; use the actual owner audit if installed, native checks otherwise.
+- The intended project root is recognized correctly; both Git identities are explicitly resolved; local Git exists and first commit is verified when approved.
 - The next developer can resume from disk without needing inaccessible previous chat context.
 
 ## Additional acceptance for Build
