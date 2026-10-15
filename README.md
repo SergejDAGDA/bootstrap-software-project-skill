@@ -51,9 +51,9 @@ edit a user's global `AGENTS.md`.
 ## Modes
 
 - **Explore:** no project creation merely because an idea was discussed.
-- **Prepare:** verified concept, agreed constraints, durable project context, documentation and local history; canonical owner outputs if installed, clearly labeled standalone notes otherwise.
+- **Prepare:** verified concept, agreed constraints, durable project context, documentation and local history; canonical owner outputs if installed, clearly labeled standalone notes otherwise (a **mixed** case is supported when only one owner is installed).
 - **Build:** Prepare plus the smallest runnable/useful application skeleton, verified with real commands.
-- **Existing project:** route to adoption/update instead of reinitializing or overwriting.
+- **Existing project:** existing source/config, maintained project rules (including project-local `AGENTS.md`), or project memory route to adoption/update without reinitialization.
 
 ## Structure
 

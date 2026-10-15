@@ -2,7 +2,7 @@
 
 ## Eligible target
 
-A **new** project root is either empty, contains only user-provided concept/brief material, or is an otherwise blank pre-initialized Git repository rooted at the exact selected folder with no conflicting history or project implementation. Treat a folder with meaningful source code, project configuration, maintained AGENTS rules, or project memory as an **existing** project, not as an empty Bootstrap target. A valid empty Git root is reusable, never a reason to re-run `git init`.
+Use the **single project-root eligibility rule** in `SKILL.md` > Route the request. Empty or concept-only roots (including supplied design assets) and blank clean Git roots are eligible. Source code, substantive configuration, project memory, or project-local `AGENTS.md` with maintained rules signals **existing project**; do not bootstrap over it. A valid empty Git root is reusable, never a reason to re-run `git init`. Resolve ambiguous files before writing.
 
 Before writing:
 
@@ -10,7 +10,7 @@ Before writing:
 - Verify the folder exists or ask before creating it; inspect hidden files and symlinks/reparse points, not just visible entries.
 - Determine whether this root or an ancestor already belongs to a Git worktree via real Git commands. Do not `git init` inside another repository by default; never `git init` at its parent by accident.
 - Preserve user-supplied briefs and assets byte-for-byte; if edits are contemplated, record pre-write checksums. Do not treat blank folders as permission to create hosting accounts or repositories remotely.
-- Classify files before writes: concept/brief/design sources permit concept-only Bootstrap; existing code/config or maintained memory means **existing project**; binary, oversized, third-party or license-uncertain assets require an explicit selective-tracking decision; unknown, unrelated or sensitive files trigger review and must not enter staging by default. File presence does not equal permission to edit, delete, import or commit.
+- Classify files before writes under the single eligibility rule: concept/brief/design sources permit concept-only Bootstrap; existing code, substantive config, project-local `AGENTS.md` with maintained rules or maintained memory means **existing project**; binary, oversized, third-party or license-uncertain assets require an explicit selective-tracking decision; unknown, unrelated or sensitive files trigger review and must not enter staging by default. File presence does not equal permission to edit, delete, import or commit.
 - Inventory existing files, hidden files and Git staging. Any surprising files or dirty/staged work trigger review, not wholesale regeneration.
 
 ## Git identity without an external hosting account

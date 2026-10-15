@@ -2,6 +2,9 @@
 
 ## 0.1.2 (candidate)
 
+- Reconcile top-level Prepare/Existing-project routing with per-owner standalone/mixed/integrated outcomes and project-local AGENTS.md eligibility.
+- Require section-scoped negative mutation tests so previous contradictory routing cannot pass on unrelated text matches.
+
 - Preflight effective author and committer identity before project writes; do not depend on GitHub, guess names/emails or mutate global config without permission.
 - Complete portable standalone Prepare/Build without optional companion skills; preserve their mandatory canonical gates when installed.
 - Classify source briefs, real application code, binary/licensed assets and unrelated files before writing or selectively staging.
