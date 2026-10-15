@@ -1,4 +1,4 @@
-# Independent acceptance: new-project bootstrap v0.1.1
+# Independent acceptance: new-project bootstrap v0.1.2
 
 The bundled unit tests verify **contract text and package integrity only**. They do not prove Codex automatically discovers, invokes, or follows the skill. Use temporary disposable project directories. Keep the canonical skill repository, installed skills, real project folders, user files and external infrastructure unchanged during this review.
 
@@ -19,8 +19,16 @@ The bundled unit tests verify **contract text and package integrity only**. They
 5. **Conflicting/unclear concept:** give materially incompatible target platforms or data boundaries. Confirm the agent asks for the minimum architectural decision before irreversible scaffolding, instead of silently treating a guess as approved.
 6. **Git safety:** for a disposable initial repository with pre-existing staged data or unexpected untracked user content, verify a blocked commit does not reset the index, `git add -A`, push, change remotes, or overwrite the user data.
 
+## Additional v0.1.2 portability regressions
+
+7. **No GitHub/no author identity:** using an isolated Git environment with no remote, account or explicit identity, a plain Prepare request must ask for a name/email and local-vs-global scope **before substantial file writes**. It must not invent a `noreply` email or mutate global configuration without separate consent. After choosing repo-local identity, a genuine first local commit succeeds.
+8. **Existing identity:** explicit repo/global/conditional config or authorized author/committer environment overrides should work without a repeat prompt; missing either author or committer must not generate a false PASS, nor should an auto-guessed username@hostname.
+9. **No companion skills:** in a controlled disposable context, complete Prepare and Build using only the bootstrap skill and native tools, with honest project notes, checks and commits. Do not fabricate owner schema, markers, installation or audits. Report standalone mode.
+10. **Installed owner failure:** with an installed but unusable memory or documentation owner, expect BLOCKER/INCOMPLETE and no misleading first success commit; no silent fallback. When the user expressly requires an unavailable protocol, also stop and ask.
+11. **Existing-file matrix:** check empty, concept-only with SVG and binary assets, blank clean Git root, meaningful program code/config, and unrelated/sensitive files. Verify preserved bytes, appropriate route, selective staging and source checksums if potentially modified.
+
 ## Required evidence
 
-Record per scenario: input/selected root, user authorization, workflow mode, **skills actually loaded vs merely discovered**, selected platform and stated assumptions, initial and final `git status` and full HEAD, exact created/changed paths, **all AGENTS protocol/schema/root/policy markers and five canonical memory file checks**, commands and observed exit codes, **the actual memory-owner audit and documentation-owner audit**, a concise content check, and forbidden operations absent. Keep all examples synthetic and disposable. No GitHub repository creation, package publication, releases, deployment, cloud writes, or changes to the installed skills.
+Record per scenario: input/selected root, user authorization, workflow mode, **skills actually loaded vs merely discovered**, selected platform and stated assumptions, initial and final `git status` and full HEAD, exact created/changed paths, **applicable AGENTS markers and five memory files (when owner installed), or standalone project notes**, commands and observed exit codes, **actual owner audits or labeled native standalone checks**, Git identity provenance and chosen scope, a concise content check, and forbidden operations absent. Keep all examples synthetic and disposable. No GitHub repository creation, package publication, releases, deployment, cloud writes, or changes to the installed skills.
 
 Report **ACCEPTED** only when all required scenarios genuinely pass. Report BLOCKER (evidenced contract failure), ENVIRONMENT (runner/tool access), IMPROVEMENT/FUTURE (nonblocking), and NOT VERIFIED (not tested) distinctly. Do not describe text-based unit tests as full integration coverage.

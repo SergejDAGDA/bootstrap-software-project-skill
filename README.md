@@ -4,7 +4,7 @@
 
 A portable Codex Agent Skill for starting **any kind of new software project** from a concept: a website, web app, desktop Windows/macOS/Linux application, calculator, CLI, library, service, extension, or a hybrid. The skill classifies the intended product and selects appropriate foundations instead of assuming one technology stack.
 
-**Version:** `0.1.1` patch candidate, pending independent source acceptance and local reinstall. `v0.1.0` passed isolated manual tests but a real fresh-folder Prepare request revealed that an agent can select documentation and Git workflows **without loading the bootstrap orchestrator**, leaving project memory absent while declaring the work complete. This update adds a mandatory memory completion gate and stronger routing guidance; true automatic activation still needs a fresh Desktop test.
+**Version:** `0.1.2` candidate. Adds Git identity preflight and optional-companion portability without weakening strict completion gates when owners are installed. Independent source acceptance and fresh-session tests are pending.
 
 ## What it coordinates
 
@@ -15,7 +15,7 @@ A portable Codex Agent Skill for starting **any kind of new software project** f
 - The platform's ordinary generators/SDKs, `.gitignore`, and executable smoke checks for Build mode.
 - An approved **local** Git repository, safe initial commit, and no implied remote publication.
 
-The skill is an **orchestrator**, not a replacement for either companion skill. **Prepare and Build are incomplete without the five canonical project-memory documents, required `AGENTS.md` markers/policies, and a passing owner memory audit**; a product-documentation audit and clean commit cannot substitute for them. If a companion is unavailable, the workflow reports that its ownership layer is not fully verified rather than claiming complete readiness.
+The skill is an **orchestrator**, not a replacement for either companion skill. **Installed companions remain authoritative:** when `maintain-project-memory` is installed, Prepare and Build require five canonical memory files, `AGENTS.md` protocol/policy markers and a passing owner audit; likewise for an installed `project-documentation`. An installed-but-failing owner is a **BLOCKER**, never a reason to silently switch modes. **Without optional companions**, a *standalone* baseline can complete with ordinary project notes/Markdown and native checks, without pretending to implement another skill's schema or audit. Explicitly required missing protocols block completion.
 
 ## Start a new project (copy and adapt)
 
@@ -51,7 +51,7 @@ edit a user's global `AGENTS.md`.
 ## Modes
 
 - **Explore:** no project creation merely because an idea was discussed.
-- **Prepare:** verified project concept, approved constraints, source map, memory, documentation, and local history; implementation can wait.
+- **Prepare:** verified concept, agreed constraints, durable project context, documentation and local history; canonical owner outputs if installed, clearly labeled standalone notes otherwise.
 - **Build:** Prepare plus the smallest runnable/useful application skeleton, verified with real commands.
 - **Existing project:** route to adoption/update instead of reinitializing or overwriting.
 
@@ -70,6 +70,14 @@ docs/OPTIONAL_GLOBAL_ROUTING.md
 
 Only `skills/bootstrap-software-project/` is the installable skill. Repository-level docs and tests stay outside it.
 
+## Git identity without a hosting account
+
+Git commits require author and committer name/email, but **not** GitHub, GitLab or a remote. During the early preflight, Bootstrap checks explicit effective Git config and authorized environment overrides; guessed OS/hostname identities do not count. If either identity is missing, Codex asks once for name/email and whether to configure only this repository or globally. Global changes require separate consent. An email is commit metadata, not a login or necessarily a live inbox. Never hardcode users' identities or fabricate a service-specific `noreply` address. Files and the index are preserved if identity is unresolved.
+
+## Pre-existing files and selective tracking
+
+An empty or concept-only folder (including briefs, supplied SVG/design files) is eligible. Existing application code, maintained project memory or substantive configuration triggers an **existing-project** route. Unknown, sensitive, oversized, binary or license-uncertain material is reviewed, preserved and not automatically staged. Presence of a file does not authorize modifying or committing it.
+
 ## Local Git policy
 
 Local Git is the **default intended outcome** for a new full-fledged software project, including projects never published online. Installing a skill from GitHub does not require Git in that project's folder.
@@ -86,4 +94,4 @@ Contract tests cover skill/package structure, trigger guardrails, project-type a
 
 ## Acceptance and regression
 
-See [independent acceptance](docs/ACCEPTANCE.md), including a **plain-prompt fresh Desktop** scenario that must distinguish automatic activation from manual invocation. A first local commit without canonical project memory is a **failed Bootstrap**, not an accepted documentation-only variant. Contract tests do not establish agent behavior. Independent source acceptance precedes merge/install; automatic trigger validation follows installation in a fresh Desktop session.
+See [independent acceptance](docs/ACCEPTANCE.md), including a **plain-prompt fresh Desktop** scenario that must distinguish automatic activation from manual invocation. A first local commit **with an installed memory owner but without its canonical gate** is a failed Bootstrap. Without that optional owner, the standalone baseline follows its own explicit acceptance criteria. Contract tests do not establish agent behavior. Independent source acceptance precedes merge/install; automatic trigger validation follows installation in a fresh Desktop session.

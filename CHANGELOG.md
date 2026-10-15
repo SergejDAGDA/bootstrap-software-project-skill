@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 (candidate)
+
+- Preflight effective author and committer identity before project writes; do not depend on GitHub, guess names/emails or mutate global config without permission.
+- Complete portable standalone Prepare/Build without optional companion skills; preserve their mandatory canonical gates when installed.
+- Classify source briefs, real application code, binary/licensed assets and unrelated files before writing or selectively staging.
+- Extend acceptance with missing-identity, no-account, absent-owner, broken-owner and existing-file regressions.
+
 ## 0.1.1 (candidate)
 
 - Make fresh-folder architecture/MVP preparation an explicit Bootstrap trigger, not merely standalone documentation work.
