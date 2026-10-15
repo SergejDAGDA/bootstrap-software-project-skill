@@ -188,12 +188,12 @@ class BootstrapSkillContractTests(unittest.TestCase):
         self.assertIn("Automatic skill discovery cannot be validated", acceptance)
         self.assertIn("without treating absence itself as an environment failure", acceptance)
         metadata = self.read(SKILL / "agents/openai.yaml")
-        self.assertIn("if installed and usable", metadata)
+        self.assert_metadata_is_entrypoint_only(metadata)
 
 
     def test_installable_payload_has_no_literal_personal_email(self):
         import re
-        payload = "\n".join(self.read(p) for p in SKILL.rglob("*.md"))
+        payload = "\n".join(self.read(p) for p in SKILL.rglob("*") if p.is_file())
         # Generic examples without a dot (e.g. username@hostname) are permitted.
         addresses = re.findall(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", payload)
         self.assertEqual(addresses, [], "Do not distribute user identities in the portable skill")
@@ -243,6 +243,47 @@ class BootstrapSkillContractTests(unittest.TestCase):
             mutated = original.replace(before, after, 1)
             with self.subTest(removed=before), self.assertRaises(AssertionError):
                 self.assert_routing_contract(mutated)
+
+
+    def assert_metadata_is_entrypoint_only(self, metadata: str):
+        """Installable metadata cannot independently define fallback policy."""
+        self.assertIn('default_prompt: "', metadata)
+        prompt = metadata.split('default_prompt: "', 1)[1].split('"', 1)[0]
+        self.assertIn("Use $bootstrap-software-project", prompt)
+        self.assertIn("Follow SKILL.md as the sole workflow contract", prompt)
+        self.assertNotRegex(
+            prompt.lower(),
+            r"\b(if|else|otherwise|fallback|standalone|installed|absent|unavailable|incompatible|write-eligible)\b",
+        )
+        self.assertNotIn("maintain-project-memory", prompt)
+        self.assertNotIn("project-documentation", prompt)
+
+    def test_installable_metadata_cannot_define_owner_fallback(self):
+        metadata = self.read(SKILL / "agents/openai.yaml")
+        self.assert_metadata_is_entrypoint_only(metadata)
+        for competing in (
+            " otherwise use standalone",
+            " if installed and usable",
+            " fallback when incompatible",
+        ):
+            mutated = metadata.replace(
+                "Follow SKILL.md as the sole workflow contract",
+                "Follow SKILL.md as the sole workflow contract" + competing,
+                1,
+            )
+            with self.subTest(competing=competing), self.assertRaises(AssertionError):
+                self.assert_metadata_is_entrypoint_only(mutated)
+
+    def test_contract_ownership_is_declared_and_safety_defers(self):
+        skill_text = self.read(SKILL / "SKILL.md")
+        safety_text = self.read(SKILL / "references/first-run-safety.md")
+        self.assertIn("**Contract authority:**", skill_text)
+        authority = skill_text.split("**Contract authority:**", 1)[1].split("\n## Route the request", 1)[0]
+        self.assertIn("sole normative source", authority)
+        self.assertIn("agents/openai.yaml", authority)
+        self.assertIn("not competing routing logic", safety_text)
+        self.assertNotIn("**Integrated release gate:**", safety_text)
+        self.assertNotIn("**Standalone release gate:**", safety_text)
 
     def test_markdown_hygiene(self):
         paths = list(ROOT.rglob("*.md"))
