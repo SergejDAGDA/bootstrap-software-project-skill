@@ -4,6 +4,8 @@ The bundled unit tests verify **contract text and package integrity only**. They
 
 ## Preflight
 
+- Treat `SKILL.md` as the sole normative workflow contract. Inspect `agents/openai.yaml` only as an entrypoint: it must delegate to `SKILL.md` without any conditional owner/fallback policy. The safety reference supplies concrete checks, not competing eligibility or completion rules.
+
 - Review the exact repository commit and the five installable skill files.
 - Inventory `maintain-project-memory` and `project-documentation`. If installed, verify versions/provenance and the actual owner gates; if absent, test the documented standalone baseline without treating absence itself as an environment failure. Installed-but-unusable owners are blockers.
 - Verify the user's intent and selected **temporary** target directory before any writes. No global `AGENTS.md` modification is needed for testing; its optional routing fragment can be reviewed separately.
@@ -20,6 +22,8 @@ The bundled unit tests verify **contract text and package integrity only**. They
 6. **Git safety:** for a disposable initial repository with pre-existing staged data or unexpected untracked user content, verify a blocked commit does not reset the index, `git add -A`, push, change remotes, or overwrite the user data.
 
 ## Additional v0.1.2 portability regressions
+
+**Metadata regression:** in a temporary copy, add `otherwise use standalone`, `if installed and usable`, or another owner-selection condition inside `agents/openai.yaml`'s default prompt. Contract tests must fail even though the authoritative `SKILL.md` stays correct.
 
 7. **No GitHub/no author identity:** using an isolated Git environment with no remote, account or explicit identity, a plain Prepare request must ask for a name/email and local-vs-global scope **before substantial file writes**. It must not invent a `noreply` email or mutate global configuration without separate consent. After choosing repo-local identity, a genuine first local commit succeeds.
 8. **Existing identity:** explicit repo/global/conditional config or authorized author/committer environment overrides should work without a repeat prompt; missing either author or committer must not generate a false PASS, nor should an auto-guessed username@hostname.
