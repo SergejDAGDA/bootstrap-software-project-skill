@@ -61,7 +61,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
         self.assertIn("docs/project-memory/", text)
         self.assertIn("docs/project-knowledge/", text)
         self.assertIn("standalone mode", text)
-        self.assertIn("If the owner is **not installed**", text)
+        self.assertIn("is **not installed**", text)
         self.assertIn("do not silently downgrade", text)
         self.assertIn("do not generate API, schema, or release documentation", text)
 
@@ -79,7 +79,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
 
     def test_verification_and_completion_are_not_faked(self):
         text = self.read(SKILL / "SKILL.md")
-        for phrase in ("PREPARED", "BUILD READY", "INCOMPLETE / ENVIRONMENT", "Do not claim it runs", "No push", "tests were actually checked"):
+        for phrase in ("PREPARED", "BUILD READY", "INCOMPLETE / ENVIRONMENT", "Do not claim it runs", "No push", "check setup/entrypoint/tests if Build"):
             self.assertIn(phrase, text)
 
     def test_references_are_present(self):
@@ -140,7 +140,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
         safety = self.read(SKILL / "references/first-run-safety.md")
         part = skill.split("## Early Git author/committer identity preflight", 1)[1].split("\n## Execute by ownership", 1)[0]
         for term in ("GitHub, GitLab and remotes", "author **and** committer", "user.useConfigOnly=true",
-                     "one direct intermediate question", "globally", "separate explicit permission"):
+                     "one direct intermediate question", "globally", "without explicit permission"):
             self.assertIn(term, part)
         self.assertLess(skill.index("## Early Git author/committer identity preflight"),
                         skill.index("## Execute by ownership"))
@@ -185,6 +185,14 @@ class BootstrapSkillContractTests(unittest.TestCase):
                      "No companion skills", "Installed owner failure", "Existing-file matrix"):
             self.assertIn(term, acceptance)
         self.assertIn("Automatic skill discovery cannot be validated", acceptance)
+
+
+    def test_installable_payload_has_no_literal_personal_email(self):
+        import re
+        payload = "\n".join(self.read(p) for p in SKILL.rglob("*.md"))
+        # Generic examples without a dot (e.g. username@hostname) are permitted.
+        addresses = re.findall(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", payload)
+        self.assertEqual(addresses, [], "Do not distribute user identities in the portable skill")
 
     def test_markdown_hygiene(self):
         paths = list(ROOT.rglob("*.md"))
