@@ -36,7 +36,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
                 "references/first-run-safety.md",
             },
         )
-        self.assertEqual(self.read(SKILL / "VERSION").strip(), "0.1.1")
+        self.assertEqual(self.read(SKILL / "VERSION").strip(), "0.1.2")
 
     def test_trigger_modes_do_not_turn_brainstorming_into_mutations(self):
         text = self.read(SKILL / "SKILL.md")
@@ -60,7 +60,9 @@ class BootstrapSkillContractTests(unittest.TestCase):
         self.assertIn("project-documentation", text)
         self.assertIn("docs/project-memory/", text)
         self.assertIn("docs/project-knowledge/", text)
-        self.assertIn("do not claim full completion", text)
+        self.assertIn("standalone mode", text)
+        self.assertIn("If the owner is **not installed**", text)
+        self.assertIn("do not silently downgrade", text)
         self.assertIn("do not generate API, schema, or release documentation", text)
 
     def test_git_init_is_different_from_local_git_auto_commit(self):
@@ -108,6 +110,12 @@ class BootstrapSkillContractTests(unittest.TestCase):
         self.assertIn("before staging", skill)
         self.assertIn("BLOCKER / INCOMPLETE", skill)
         self.assertIn("a **BLOCKER**", safety)
+        gate = skill.split("6. **Verify and checkpoint (mode-aware completion gate).**", 1)[1].split("\n7. **Make a scoped local commit", 1)[0]
+        self.assertIn("**Before staging or claiming a successful Bootstrap**", gate)
+        self.assertIn("**Integrated memory gate (owner installed):**", gate)
+        self.assertIn("**Standalone memory gate (owner absent):**", gate)
+        self.assertIn("audit_project_memory.py <project-root>", gate)
+        self.assertIn("**BLOCKER / INCOMPLETE**", gate)
 
     def test_plain_prompt_and_routing_regression_are_documented(self):
         readme_ru = self.read(ROOT / "README.ru.md")
@@ -125,6 +133,58 @@ class BootstrapSkillContractTests(unittest.TestCase):
         skill = self.read(SKILL / "SKILL.md")
         self.assertIn("discovered/read from applied", skill)
         self.assertIn("NOT VERIFIED", skill)
+
+
+    def test_identity_preflight_requires_both_roles(self):
+        skill = self.read(SKILL / "SKILL.md")
+        safety = self.read(SKILL / "references/first-run-safety.md")
+        part = skill.split("## Early Git author/committer identity preflight", 1)[1].split("\n## Execute by ownership", 1)[0]
+        for term in ("GitHub, GitLab and remotes", "author **and** committer", "user.useConfigOnly=true",
+                     "one direct intermediate question", "globally", "separate explicit permission"):
+            self.assertIn(term, part)
+        self.assertLess(skill.index("## Early Git author/committer identity preflight"),
+                        skill.index("## Execute by ownership"))
+        self.assertIn("not** login authorization", safety)
+
+    def test_absent_companions_are_distinct_from_broken_companions(self):
+        skill = self.read(SKILL / "SKILL.md")
+        memory = skill.split("3. **Establish durable project context.**", 1)[1].split("\n4. **Create product documentation.", 1)[0]
+        docs = skill.split("4. **Create product documentation.**", 1)[1].split("\n5. **Create technical foundation", 1)[0]
+        for phrase in ("**not installed**", "docs/project-notes/", "do not copy",
+                       "do not silently downgrade"):
+            self.assertIn(phrase, memory)
+        for phrase in ("If absent", "README.md", "docs/ARCHITECTURE.md", "is installed but fails"):
+            self.assertIn(phrase, docs)
+        self.assertIn("**BLOCKER / INCOMPLETE**", docs)
+
+    def test_existing_files_are_classified_before_staging(self):
+        skill = self.read(SKILL / "SKILL.md")
+        safety = self.read(SKILL / "references/first-run-safety.md")
+        part = skill.split("1. **Inspect and classify.**", 1)[1].split("\n2. **Establish local Git.", 1)[0]
+        for phrase in ("actual application code/config", "large/binary/licensed",
+                       "unrelated/unknown/sensitive", "pre-write checksums", "No indiscriminate staging"):
+            self.assertIn(phrase, part)
+        self.assertIn("File presence does not equal permission", safety)
+
+    def test_starter_prompts_are_plain_language(self):
+        for name, placeholder, heading in (
+            ("README.md", "<PROJECT_FOLDER_PATH>", "## Start a new project"),
+            ("README.ru.md", "<ПУТЬ_К_ПАПКЕ_ПРОЕКТА>", "## Старт нового проекта"),
+        ):
+            doc = self.read(ROOT / name)
+            fence = chr(96) * 3
+            block = doc.split(heading, 1)[1].split(fence + "text", 1)[1].split(fence, 1)[0]
+            self.assertIn(placeholder, block)
+            for forbidden in ("bootstrap-software-project", "maintain-project-memory", "project-documentation",
+                              "reference project", "проект-референс"):
+                self.assertNotIn(forbidden, block.lower())
+
+    def test_portability_acceptance_scenarios_exist(self):
+        acceptance = self.read(DOCS / "ACCEPTANCE.md")
+        for term in ("No GitHub/no author identity", "Existing identity",
+                     "No companion skills", "Installed owner failure", "Existing-file matrix"):
+            self.assertIn(term, acceptance)
+        self.assertIn("Automatic skill discovery cannot be validated", acceptance)
 
     def test_markdown_hygiene(self):
         paths = list(ROOT.rglob("*.md"))
