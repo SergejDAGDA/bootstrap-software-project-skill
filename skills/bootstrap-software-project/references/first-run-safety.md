@@ -28,7 +28,7 @@ At the first Bootstrap plan, clearly say that a **new local Git repository and i
 - Prefer Git's supported native commands and standard ignore patterns for the chosen stack.
 - Add `.gitignore` before staging: secrets/`.env`, credentials, local databases, backups, runtime, build outputs, node_modules/venvs, and OS-specific files where appropriate. Do not ignore legitimate source data by blindly copying a global template.
 - Treat any pre-existing staged changes as a stop for automatic commit; preserve the index. Use explicit reviewed paths rather than `git add .`, `git add -A`, `git commit -a`, or a broad directory sweep.
-- Do not set global Git user identity, disable hooks, rewrite history, add a remote, or push on behalf of the user.
+- Do not set global Git user identity **without explicit consent**, disable hooks, rewrite history, add a remote, or push on behalf of the user.
 - Verify new HEAD, committed paths, and remaining unrelated working-tree state.
 
 Downloading tools or installing skills from GitHub may be done by supported installers without Git in the *target project*. That fact does not reduce Git's value as the project's local version history. Do not conflate a GitHub remote with a local Git repository.
@@ -41,7 +41,7 @@ Downloading tools or installing skills from GitHub may be done by supported inst
 
 - The concept, MVP and exclusions are grounded in supplied evidence.
 - Key decisions and unknowns are recorded with correct approval provenance.
-- `AGENTS.md` routes future work to project memory and knowledge owners.
+- `AGENTS.md` routes future work to installed memory/documentation owners where applicable, or records standalone project rules when absent.
 - When the memory owner is installed, all five canonical `docs/project-memory/{PROJECT,STATUS,DECISIONS,SESSION_LOG,HANDOFF}.md` files exist and its actual audit passes; otherwise standalone notes exist without false protocol claims.
 - The product documentation has an accurate index, no broken relative links and Git-clean authored Markdown; use the actual owner audit if installed, native checks otherwise.
 - The intended project root is recognized correctly; both Git identities are explicitly resolved; local Git exists and first commit is verified when approved.

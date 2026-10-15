@@ -1,4 +1,4 @@
 interface:
   display_name: "Bootstrap Software Project"
   short_description: "Turn a new software concept into a ready-to-work project"
-  default_prompt: "Use $bootstrap-software-project to initialize a NEW software project from my concept documents or the current task. Determine the intended software type and platform, ask only about material ambiguities, coordinate maintain-project-memory and project-documentation, prepare a native project foundation with approved local Git, and verify the result. Do not publish or deploy."
+  default_prompt: "Use $bootstrap-software-project to initialize a NEW software project from my concept documents or the current task. Determine the intended software type and platform, ask only about material ambiguities, use maintain-project-memory and project-documentation if installed and usable (otherwise use a clearly labeled standalone baseline), prepare a native project foundation with approved local Git, and verify the result. Do not publish or deploy."

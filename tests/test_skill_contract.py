@@ -165,6 +165,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
                        "unrelated/unknown/sensitive", "pre-write checksums", "No indiscriminate staging"):
             self.assertIn(phrase, part)
         self.assertIn("File presence does not equal permission", safety)
+        self.assertIn("global Git user identity **without explicit consent**", safety)
 
     def test_starter_prompts_are_plain_language(self):
         for name, placeholder, heading in (
@@ -185,6 +186,9 @@ class BootstrapSkillContractTests(unittest.TestCase):
                      "No companion skills", "Installed owner failure", "Existing-file matrix"):
             self.assertIn(term, acceptance)
         self.assertIn("Automatic skill discovery cannot be validated", acceptance)
+        self.assertIn("without treating absence itself as an environment failure", acceptance)
+        metadata = self.read(SKILL / "agents/openai.yaml")
+        self.assertIn("if installed and usable", metadata)
 
 
     def test_installable_payload_has_no_literal_personal_email(self):
