@@ -281,7 +281,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
         authority = skill_text.split("**Contract authority:**", 1)[1].split("\n## Route the request", 1)[0]
         self.assertIn("sole normative source", authority)
         self.assertIn("agents/openai.yaml", authority)
-        self.assertIn("not competing routing logic", safety_text)
+        self.assertIn("does not define who is installed, when fallback is allowed", safety_text)
         self.assertNotIn("**Integrated release gate:**", safety_text)
         self.assertNotIn("**Standalone release gate:**", safety_text)
 
