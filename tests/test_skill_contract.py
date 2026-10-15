@@ -161,7 +161,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
         skill = self.read(SKILL / "SKILL.md")
         safety = self.read(SKILL / "references/first-run-safety.md")
         part = skill.split("1. **Inspect and classify.**", 1)[1].split("\n2. **Establish local Git.", 1)[0]
-        for phrase in ("actual application code/config", "large/binary/licensed",
+        for phrase in ("actual application code, substantive configuration or maintained project-local rules", "large/binary/licensed",
                        "unrelated/unknown/sensitive", "pre-write checksums", "No indiscriminate staging"):
             self.assertIn(phrase, part)
         self.assertIn("File presence does not equal permission", safety)
@@ -197,6 +197,52 @@ class BootstrapSkillContractTests(unittest.TestCase):
         # Generic examples without a dot (e.g. username@hostname) are permitted.
         addresses = re.findall(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", payload)
         self.assertEqual(addresses, [], "Do not distribute user identities in the portable skill")
+
+
+    def assert_routing_contract(self, skill_text: str):
+        """Scope semantic assertions to the authoritative route, not stray mentions."""
+        route = skill_text.split("## Route the request\n\n", 1)[1].split("\n## Establish input", 1)[0]
+        eligibility = route.split("**Single project-root eligibility rule:**", 1)[1].split("\n1. **Explore only:**", 1)[0]
+        prepare = route.split("2. **Prepare:**", 1)[1].split("\n3. **Build:**", 1)[0]
+        existing = route.split("4. **Existing project:**", 1)[1].split("\n\nThe user's explicit", 1)[0]
+        self.assertIn("empty or concept-only folder", eligibility)
+        self.assertIn("project-local `AGENTS.md` with maintained project rules", eligibility)
+        self.assertIn("substantive configuration", eligibility)
+        self.assertIn("when an owner skill is installed and usable", prepare)
+        self.assertIn("when absent and not explicitly required", prepare)
+        self.assertIn("An installed but failing owner is a blocker", prepare)
+        self.assertNotIn("produce the approved baseline, canonical memory and product knowledge", prepare)
+        self.assertIn("project-local `AGENTS.md`/maintained project rules", existing)
+        self.assertIn("substantive configuration", existing)
+        self.assertIn("existing-project adoption/update", existing)
+        self.assertIn("Never re-bootstrap", existing)
+        return route
+
+    def test_authoritative_routing_and_owner_modes_agree(self):
+        skill_text = self.read(SKILL / "SKILL.md")
+        self.assert_routing_contract(skill_text)
+        safety = self.read(SKILL / "references/first-run-safety.md")
+        self.assertIn("single project-root eligibility rule", safety)
+        completion = skill_text.split("## Completion states", 1)[1].split("\n## Final report", 1)[0]
+        for phrase in ("Evaluate memory and product-documentation owners **independently**",
+                       "installed-but-failing", "explicitly required-but-absent", "**mixed**"):
+            self.assertIn(phrase, completion)
+
+    def test_routing_negative_mutations_cannot_pass_from_other_sections(self):
+        original = self.read(SKILL / "SKILL.md")
+        self.assert_routing_contract(original)
+        eligibility_key = "project-local `AGENTS.md` with maintained project rules"
+        existing_key = "project-local `AGENTS.md`/maintained project rules"
+        prepare_key = "when absent and not explicitly required"
+        for before, after in (
+            (eligibility_key, "user-supplied design input"),
+            (existing_key, "generic documentation"),
+            (prepare_key, "always requiring canonical documents"),
+        ):
+            self.assertIn(before, original)
+            mutated = original.replace(before, after, 1)
+            with self.subTest(removed=before), self.assertRaises(AssertionError):
+                self.assert_routing_contract(mutated)
 
     def test_markdown_hygiene(self):
         paths = list(ROOT.rglob("*.md"))
