@@ -33,19 +33,16 @@ At the first Bootstrap plan, clearly say that a **new local Git repository and i
 
 Downloading tools or installing skills from GitHub may be done by supported installers without Git in the *target project*. That fact does not reduce Git's value as the project's local version history. Do not conflate a GitHub remote with a local Git repository.
 
-## Minimal acceptance for Prepare
+## Prepare safety evidence (not a separate completion policy)
 
-**Integrated release gate:** if `maintain-project-memory` is installed/required, absence of canonical project memory is a **BLOCKER**, not an optional follow-up. Before the first task-owned local commit, verify the owner's actual audit succeeds and `AGENTS.md` has the protocol/schema/root/update-policy/commit-policy markers. If an installed owner is broken, do not hide its failure behind standalone fallback. Preserve partial files without calling the result complete.
+**Source of truth:** Apply the owner-availability and completion gates in `SKILL.md` > Route the request / Verify and checkpoint / Completion states. This reference lists safety evidence to check; it does not define who is installed, when fallback is allowed, or what counts as PREPARED. A failed applicable owner gate is a **BLOCKER**; preserve partial work without falsely declaring completion.
 
-**Standalone release gate:** if the owner is genuinely absent and not explicitly required, minimal truthful `AGENTS.md` and project notes can pass without any claim to that protocol or its audit. If `project-documentation` is absent, use small native Markdown with explicit link/scope checks; if installed, its actual audit remains mandatory.
-
-- The concept, MVP and exclusions are grounded in supplied evidence.
-- Key decisions and unknowns are recorded with correct approval provenance.
-- `AGENTS.md` routes future work to installed memory/documentation owners where applicable, or records standalone project rules when absent.
-- When the memory owner is installed, all five canonical `docs/project-memory/{PROJECT,STATUS,DECISIONS,SESSION_LOG,HANDOFF}.md` files exist and its actual audit passes; otherwise standalone notes exist without false protocol claims.
-- The product documentation has an accurate index, no broken relative links and Git-clean authored Markdown; use the actual owner audit if installed, native checks otherwise.
-- The intended project root is recognized correctly; both Git identities are explicitly resolved; local Git exists and first commit is verified when approved.
-- The next developer can resume from disk without needing inaccessible previous chat context.
+- Confirm concept, MVP and exclusions against supplied evidence, preserving original source bytes.
+- Record key decisions and unknowns with correct approval provenance.
+- Verify project-local `AGENTS.md` and durable context against the applicable SKILL.md gate. Do not claim an unavailable owner's protocol or audit.
+- Run the actual companion-owner audits whenever the authoritative workflow requires them; otherwise record the native checks that really ran. Inspect relative links and authored Markdown hygiene.
+- Verify root identity, effective Git author/committer, consent for local `git init`, scoped staging, successful first commit when authorized and absence of unauthorized remotes.
+- Ensure a new developer can resume from disk without the previous chat.
 
 ## Additional acceptance for Build
 
