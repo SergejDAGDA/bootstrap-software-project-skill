@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3
+
+- Establish conditional handoff routing for pet projects with separately managed Docker deployment: prepare approved source/build evidence, document release impact and generate a bounded deployment prompt.
+- Route verified post-deployment facts back to existing project memory and impacted documentation through their respective owners; do not infer cross-chat synchronization without shared authorized access.
+- Preserve bootstrap eligibility, Git safety, existing-project protection and standalone non-Docker workflows.
+
 ## 0.1.2 (candidate)
 
 - Make `SKILL.md` the sole normative routing/completion contract; reduce `agents/openai.yaml` to a policy-free entrypoint and retain operational safety checks in its reference.
