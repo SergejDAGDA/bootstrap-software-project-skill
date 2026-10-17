@@ -4,7 +4,7 @@
 
 A portable Codex Agent Skill for starting **any kind of new software project** from a concept: a website, web app, desktop Windows/macOS/Linux application, calculator, CLI, library, service, extension, or a hybrid. The skill classifies the intended product and selects appropriate foundations instead of assuming one technology stack.
 
-**Version:** `0.1.2` candidate. Adds Git identity preflight and optional-companion portability without weakening strict completion gates when owners are installed. Independent source acceptance and fresh-session tests are pending.
+**Installable skill version:** `0.1.3`. The skill preserves Git identity preflight, owner-specific completion gates, and conditional cross-project release/deployment routing. Published release and installed versions must be verified independently.
 
 ## What it coordinates
 
