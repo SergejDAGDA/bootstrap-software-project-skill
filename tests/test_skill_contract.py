@@ -36,7 +36,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
                 "references/first-run-safety.md",
             },
         )
-        self.assertEqual(self.read(SKILL / "VERSION").strip(), "0.1.2")
+        self.assertEqual(self.read(SKILL / "VERSION").strip(), "0.1.3")
 
     def test_trigger_modes_do_not_turn_brainstorming_into_mutations(self):
         text = self.read(SKILL / "SKILL.md")
