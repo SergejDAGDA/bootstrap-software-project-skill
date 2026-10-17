@@ -57,6 +57,17 @@ If valid explicit author **and** committer identity cannot be established, ask *
 
 7. **Make a scoped local commit only after the mandatory memory and documentation gates pass.** Follow `maintain-project-memory`'s `references/local-git-checkpoints.md` when available. Stage only reviewed task-owned paths, verify cached diff and `git diff --cached --check`, then commit once if authorized and safe. Existing staged work, changing HEAD, ambiguous ownership, secrets, or failed checks **stop** the commit. Never bypass hooks or clean/reset unrelated files. No push, remote repo, tag, release, installer publication or deployment.
 
+## Conditional cross-project release/deployment routing
+
+When the **new project's approved delivery model** includes a separate Docker/deployment project, establish a small, project-local coordination rule during Prepare/Build using the respective document/memory owners. It must fit the existing `AGENTS.md` rather than create another protocol or always-on automation:
+
+- **Development owns the release:** when the owner requests "prepare for deployment", select and verify an exact approved source revision/build, check affected release/product documentation via `$project-documentation` when installed and applicable, create a `$maintain-project-memory Handoff` for the unfinished deployment transfer, and return a deployment prompt referencing the actual project files and exact release identity. This is preparation only, not permission to deploy.
+- **Deployment owns the runtime:** a separately authorized deployment project applies its Docker maintenance/deployment workflow, verifies existing server data and target-only backup/recovery gates, and returns a factual deployment receipt. The development project must not infer deployment success from a prepared Handoff.
+- **Project memory owns continuity:** when authorized access to the *same canonical project root* exists, route the verified deployment receipt through `$maintain-project-memory Checkpoint`, updating current status/history and closing the active Handoff. Update maintained technical docs through `$project-documentation update` only if their content actually changed or the owner requested it. If cross-project access or write authorization is missing, record a pending synchronization rather than assuming another chat was updated.
+- **Future work reads first:** the development agent reads the current project files and approved release/runtime identity before resuming work. Do not treat a chat transcript as a cross-project source of truth. No implicit repository push, tag, release, deploy or remote mutation is authorized by these routing rules.
+
+This routing is **conditional**: do not add Docker requirements to desktop/library/other projects with no accepted Docker deployment path. The `bootstrap-software-project` skill coordinates owners at initialization; it does not take over their ongoing responsibilities.
+
 ## Completion states
 
 - **PREPARED:** approved scope, durable context, honest product documentation, passing **applicable** gates, and a truthful next action exist. Evaluate memory and product-documentation owners **independently**: for each installed owner require its canonical files and actual audit; for each genuinely absent, non-required owner require the verified standalone baseline and native checks. An installed-but-failing or explicitly required-but-absent owner makes this **INCOMPLETE**, even if Git is clean.
