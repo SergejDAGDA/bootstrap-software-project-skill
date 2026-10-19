@@ -6,7 +6,7 @@ A portable Agent Skill for Codex Desktop that starts **any kind of new software 
 
 **Installable skill version:** `0.1.3`. The skill preserves Git identity preflight, owner-specific completion gates, and conditional cross-project release/deployment routing. Published release and installed versions must be verified independently.
 
-**Repository versus skill identity:** The GitHub distribution is being renamed to `SergejDAGDA/bootstrap-software-project-skill`, while the installed Agent Skill remains `bootstrap-software-project` (directory `skills/bootstrap-software-project/`, frontmatter `name`, and invocation `$bootstrap-software-project`). The `-skill` suffix belongs to the repository name only; it is **not** part of the skill ID. The repository rename must be verified separately before this documentation is merged. Other agent runtimes are not claimed as tested.
+**Repository versus skill identity:** The GitHub distribution repository is `SergejDAGDA/bootstrap-software-project-skill`, while the installed Agent Skill remains `bootstrap-software-project` (directory `skills/bootstrap-software-project/`, frontmatter `name`, and invocation `$bootstrap-software-project`). The `-skill` suffix belongs to the repository name only; it is **not** part of the skill ID. Other agent runtimes are not claimed as tested.
 
 ## What it coordinates
 
