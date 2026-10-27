@@ -36,7 +36,7 @@ class BootstrapSkillContractTests(unittest.TestCase):
                 "references/first-run-safety.md",
             },
         )
-        self.assertEqual(self.read(SKILL / "VERSION").strip(), "0.1.3")
+        self.assertEqual(self.read(SKILL / "VERSION").strip(), "0.1.4")
 
     def test_trigger_modes_do_not_turn_brainstorming_into_mutations(self):
         text = self.read(SKILL / "SKILL.md")
@@ -116,6 +116,41 @@ class BootstrapSkillContractTests(unittest.TestCase):
         self.assertIn("**Standalone memory gate (owner absent):**", gate)
         self.assertIn("audit_project_memory.py <project-root>", gate)
         self.assertIn("**BLOCKER / INCOMPLETE**", gate)
+
+
+    def assert_adoption_completion_contract(self, skill: str):
+        """The two routing checks belong to the integrated completion gate itself."""
+        gate = skill.split("6. **Verify and checkpoint (mode-aware completion gate).**", 1)[1].split(
+            "\n7. **Make a scoped local commit", 1
+        )[0]
+        memory = gate.split("**Integrated memory gate (owner installed):**", 1)[1].split(
+            "\n   - **Standalone memory gate", 1
+        )[0]
+        for required in (
+            "audit_project_memory.py <project-root> --adoption",
+            "ADOPTION wip_continuity_routing=declared",
+            "ADOPTION checkpoint_routing=declared",
+            "process exit code",
+            "adoption audit may exit `0`",
+            "**BLOCKER / INCOMPLETE**",
+        ):
+            self.assertIn(required, memory)
+        return memory
+
+    def test_integrated_bootstrap_adoption_gate_rejects_warning_success(self):
+        original = self.read(SKILL / "SKILL.md")
+        self.assert_adoption_completion_contract(original)
+        # Negative mutations must fail even if the text remains elsewhere in SKILL.md.
+        for before, after in (
+            ("audit_project_memory.py <project-root> --adoption", "audit_project_memory.py <project-root>"),
+            ("ADOPTION wip_continuity_routing=declared", "wip routing checked"),
+            ("ADOPTION checkpoint_routing=declared", "checkpoint routing checked"),
+            ("adoption audit may exit `0`", "adoption audit must exit nonzero"),
+        ):
+            self.assertIn(before, original)
+            mutated = original.replace(before, after, 1)
+            with self.subTest(removed=before), self.assertRaises(AssertionError):
+                self.assert_adoption_completion_contract(mutated)
 
     def test_plain_prompt_and_routing_regression_are_documented(self):
         readme_ru = self.read(ROOT / "README.ru.md")

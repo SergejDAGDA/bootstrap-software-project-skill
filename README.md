@@ -4,7 +4,7 @@
 
 A portable Agent Skill for Codex Desktop that starts **any kind of new software project** from a concept: a website, web app, desktop Windows/macOS/Linux application, calculator, CLI, library, service, extension, or a hybrid. The skill classifies the intended product and selects appropriate foundations instead of assuming one technology stack.
 
-**Installable skill version:** `0.1.3`. The skill preserves Git identity preflight, owner-specific completion gates, and conditional cross-project release/deployment routing. Published release and installed versions must be verified independently.
+**Installable skill version:** `0.1.4` (candidate). The skill adds an explicit Project Memory adoption-routing completion gate while preserving Git identity preflight, owner-specific completion gates, and conditional cross-project release/deployment routing. Published release and installed versions must be verified independently.
 
 **Repository versus skill identity:** The GitHub distribution repository is `SergejDAGDA/bootstrap-software-project-skill`, while the installed Agent Skill remains `bootstrap-software-project` (directory `skills/bootstrap-software-project/`, frontmatter `name`, and invocation `$bootstrap-software-project`). The `-skill` suffix belongs to the repository name only; it is **not** part of the skill ID. Other agent runtimes are not claimed as tested.
 
@@ -17,7 +17,7 @@ A portable Agent Skill for Codex Desktop that starts **any kind of new software 
 - The platform's ordinary generators/SDKs, `.gitignore`, and executable smoke checks for Build mode.
 - An approved **local** Git repository, safe initial commit, and no implied remote publication.
 
-The skill is an **orchestrator**, not a replacement for either companion skill. **The installable `SKILL.md` defines the workflow; `agents/openai.yaml` only points to it and must not define alternate fallback rules.** **Installed companions remain authoritative:** when `maintain-project-memory` is installed, Prepare and Build require five canonical memory files, `AGENTS.md` protocol/policy markers and a passing owner audit; likewise for an installed `project-documentation`. An installed-but-failing owner is a **BLOCKER**, never a reason to silently switch modes. **Without optional companions**, a *standalone* baseline can complete with ordinary project notes/Markdown and native checks, without pretending to implement another skill's schema or audit. Explicitly required missing protocols block completion.
+The skill is an **orchestrator**, not a replacement for either companion skill. **The installable `SKILL.md` defines the workflow; `agents/openai.yaml` only points to it and must not define alternate fallback rules.** **Installed companions remain authoritative:** when `maintain-project-memory` is installed, Prepare and Build require five canonical memory files, `AGENTS.md` protocol/policy markers, a passing structural audit, and both adoption-routing results marked `declared`; likewise for an installed `project-documentation`. An installed-but-failing owner is a **BLOCKER**, never a reason to silently switch modes. **Without optional companions**, a *standalone* baseline can complete with ordinary project notes/Markdown and native checks, without pretending to implement another skill's schema or audit. Explicitly required missing protocols block completion.
 
 ## Start a new project (copy and adapt)
 
