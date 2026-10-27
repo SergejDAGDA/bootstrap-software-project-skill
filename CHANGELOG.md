@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.4 (candidate)
+
+- Require the installed Project Memory owner's structural and `--adoption` audits before claiming an integrated Bootstrap is complete; both WIP continuity and Checkpoint routing must be `declared` even if the adoption audit exits `0` with warnings.
+- Route incomplete AGENTS lifecycle rules through the memory owner's canonical fragment rather than hand-written shortcuts; preserve unrelated project rules, existing-project boundaries and Git safety.
+- Add section-scoped mutation tests and a disposable negative/positive acceptance scenario; retain the existing owner audit's read-only warning semantics.
+
 ## 0.1.3
 
 - Establish conditional handoff routing for pet projects with separately managed Docker deployment: prepare approved source/build evidence, document release impact and generate a bounded deployment prompt.
