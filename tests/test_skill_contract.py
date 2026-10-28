@@ -77,6 +77,21 @@ class BootstrapSkillContractTests(unittest.TestCase):
         self.assertIn("Do not overwrite an existing global `AGENTS.md`", router)
         self.assertIn("project folder I explicitly selected", router)
 
+    def test_generated_agents_uses_durable_routing_not_transient_phase(self):
+        skill = self.read(SKILL / "SKILL.md")
+        step = skill.split("3. **Establish durable project context.**", 1)[1].split(
+            "\n4. **Create product documentation.**", 1
+        )[0]
+        for required in (
+            "For newly written `AGENTS.md`",
+            "not a live progress snapshot",
+            "current PREPARE/BUILD phase",
+            "pending Git commit",
+            "memory owner's `STATUS.md`",
+            "remains true after the intended local commit",
+        ):
+            self.assertIn(required, step)
+
     def test_verification_and_completion_are_not_faked(self):
         text = self.read(SKILL / "SKILL.md")
         for phrase in ("PREPARED", "BUILD READY", "INCOMPLETE / ENVIRONMENT", "Do not claim it runs", "No push", "check setup/entrypoint/tests if Build"):
