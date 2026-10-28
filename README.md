@@ -4,9 +4,15 @@
 
 A portable Agent Skill for Codex Desktop that starts **any kind of new software project** from a concept: a website, web app, desktop Windows/macOS/Linux application, calculator, CLI, library, service, extension, or a hybrid. The skill classifies the intended product and selects appropriate foundations instead of assuming one technology stack.
 
-**Installable skill version:** `0.1.4` (candidate). The skill adds an explicit Project Memory adoption-routing completion gate while preserving Git identity preflight, owner-specific completion gates, and conditional cross-project release/deployment routing. Published release and installed versions must be verified independently.
+**Source-tree skill version:** `0.1.5`. Generated project `AGENTS.md` now holds durable operating guidance rather than temporary PREPARE/BUILD or pending Git-commit state. Source-tree, published release and installed versions must be verified independently.
 
 **Repository versus skill identity:** The GitHub distribution repository is `SergejDAGDA/bootstrap-software-project-skill`, while the installed Agent Skill remains `bootstrap-software-project` (directory `skills/bootstrap-software-project/`, frontmatter `name`, and invocation `$bootstrap-software-project`). The `-skill` suffix belongs to the repository name only; it is **not** part of the skill ID. Other agent runtimes are not claimed as tested.
+
+## Releases and updates
+
+The stable GitHub release channel is `https://github.com/SergejDAGDA/bootstrap-software-project-skill/releases/latest`. For each publication, confirm a tested exact source commit, create its immutable version identity as a `vX.Y.Z` tag, and publish a non-draft, non-prerelease GitHub Release marked **Latest**. Beta/RC builds are prereleases and must not displace the stable channel. Verify the `Latest` label and version tag after publication; the repository's moving `main` branch is not a release identity.
+
+To install or update manually, obtain the verified release's `skills/bootstrap-software-project/` folder, not an arbitrary `main` snapshot, and install it under the Codex user skills directory using the supported Codex skill-install flow. Read its `VERSION` marker and compare it with the published tag. Back up or preserve an existing authored installation before replacement; do not silently overwrite it. Restart Codex Desktop or open a fresh session after updating and confirm the installed skill is discoverable. No automatic updater or remote mutation is implied by `Latest`.
 
 ## What it coordinates
 
