@@ -10,7 +10,7 @@ A portable Agent Skill for Codex Desktop that starts **any kind of new software 
 
 ## Releases and updates
 
-The stable GitHub release channel is `https://github.com/SergejDAGDA/bootstrap-software-project-skill/releases/latest`. For each publication, confirm a tested exact source commit, create its immutable version identity as a `vX.Y.Z` tag, and publish a non-draft, non-prerelease GitHub Release marked **Latest**. Beta/RC builds are prereleases and must not displace the stable channel. Verify the `Latest` label and version tag after publication; the repository's moving `main` branch is not a release identity.
+The stable GitHub release channel is `https://github.com/SergejDAGDA/bootstrap-software-project-skill/releases/latest`. For each publication, confirm a tested exact source commit, create its exact version identity as a `vX.Y.Z` tag, and publish a non-draft, non-prerelease GitHub Release marked **Latest**. Beta/RC builds are prereleases and must not displace the stable channel. Verify the `Latest` label and version tag after publication; the repository's moving `main` branch is not a release identity.
 
 To install or update manually, obtain the verified release's `skills/bootstrap-software-project/` folder, not an arbitrary `main` snapshot, and install it under the Codex user skills directory using the supported Codex skill-install flow. Read its `VERSION` marker and compare it with the published tag. Back up or preserve an existing authored installation before replacement; do not silently overwrite it. Restart Codex Desktop or open a fresh session after updating and confirm the installed skill is discoverable. No automatic updater or remote mutation is implied by `Latest`.
 
