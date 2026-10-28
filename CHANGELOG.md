@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.5
+
+- Keep newly generated `AGENTS.md` limited to durable operating instructions and owner routing rather than transient PREPARE/BUILD, next-stage or pending-commit assertions.
+- Refer mutable project state to the memory owner's `STATUS.md` or standalone notes; preserve existing authored project rules.
+- Require generated instructions to remain true after the intended local checkpoint.
+- Add a focused static contract regression, and document the stable GitHub Release `Latest` channel and manual update safeguards.
+
 ## 0.1.4 (candidate)
 
 - Require the installed Project Memory owner's structural and `--adoption` audits before claiming an integrated Bootstrap is complete; both WIP continuity and Checkpoint routing must be `declared` even if the adoption audit exits `0` with warnings.

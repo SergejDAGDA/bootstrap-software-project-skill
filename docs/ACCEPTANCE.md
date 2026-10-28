@@ -1,4 +1,4 @@
-# Independent acceptance: new-project bootstrap v0.1.4
+# Independent acceptance: new-project bootstrap v0.1.5
 
 The bundled unit tests verify **contract text and package integrity only**. They do not prove Codex automatically discovers, invokes, or follows the skill. Use temporary disposable project directories. Keep the canonical skill repository, installed skills, real project folders, user files and external infrastructure unchanged during this review.
 
@@ -32,6 +32,10 @@ The bundled unit tests verify **contract text and package integrity only**. They
 11. **Existing-file matrix:** check empty, concept-only with SVG and binary assets, blank clean Git root, **project-local `AGENTS.md` alone containing maintained rules**, substantive configuration alone, meaningful application source, and unrelated/sensitive files. Verify preserved bytes, correct existing-project or new-project route, selective staging and source checksums if potentially modified.
 
 12. **Integrated memory adoption routing (v0.1.4):** On a disposable integrated Bootstrap candidate, deliberately omit the canonical Minimum WIP Continuity stop boundary or explicit Checkpoint/SESSION_LOG routing **before the completion gate**. The owner's `audit_project_memory.py <root> --adoption` may return exit code `0` while reporting `missing-review-required`: Bootstrap must classify this as **BLOCKER / INCOMPLETE**, withhold PREPARED/BUILD READY and any first commit, and route correction to the installed memory owner. Re-run the gate only after the owner restores canonical routing. Positive acceptance requires **both** `ADOPTION wip_continuity_routing=declared` and `ADOPTION checkpoint_routing=declared`, plus the normal structural audit. A pre-existing real project is a read-only negative fixture, never a target for re-bootstrap or manual repair. These checks do not demonstrate automatic skill invocation without a fresh installed-skill Desktop run.
+
+## Additional v0.1.5 PREPARE to BUILD regression
+
+On a new disposable local-only project, use the ordinary PREPARE request followed by an ordinary BUILD request in a fresh Codex Desktop session with the installed candidates. After the final authorized local Git commit, read the committed `AGENTS.md`, `docs/project-memory/STATUS.md`, `docs/project-memory/SESSION_LOG.md` and any task-relevant `BUILD_PLAN.md`. `AGENTS.md` must contain durable rules and owner routing, not a live PREPARE/BUILD phase or a next Git checkpoint; `STATUS.md` must be commit-stable, while history remains historical. A finished execution plan may be retired with links updated or retained as clearly historical/static evidence, without deleting approved unique requirements. Any competing pending-commit claim is a BLOCKER. Structural owner audits alone are insufficient for this semantic consistency check. Do not mutate existing negative fixtures or installed skills during the regression.
 
 ## Required evidence
 
