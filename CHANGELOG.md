@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.5 (source prepared, release not yet published)
+## 0.1.5
 
 - Keep newly generated `AGENTS.md` limited to durable operating instructions and owner routing rather than transient PREPARE/BUILD, next-stage or pending-commit assertions.
 - Refer mutable project state to the memory owner's `STATUS.md` or standalone notes; preserve existing authored project rules.
